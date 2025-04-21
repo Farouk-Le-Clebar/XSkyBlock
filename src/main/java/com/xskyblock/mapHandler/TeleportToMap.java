@@ -31,7 +31,7 @@ public class TeleportToMap {
             Location spawnLocation = world.getSpawnLocation();
 
             player.teleport(spawnLocation);
-            player.sendMessage("Teleportation to your island: " + worldName);
+            player.sendMessage("Teleportation to your island...");
         } else {
             player.sendMessage("Unable to teleport. Please contact an administrator.");
         }
@@ -42,7 +42,7 @@ public class TeleportToMap {
         World world = Bukkit.createWorld(creator);
     
         if (world == null) {
-            throw new IllegalArgumentException("World could not be loaded: " + worldName);
+            throw new IllegalArgumentException("World could not be loaded. Please contact an administrator.");
         }
     }
 }

@@ -9,11 +9,9 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 public class MapCreator {
-
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("Only players can use this command.");
@@ -36,34 +34,35 @@ public class MapCreator {
     }
 
     private void copyOriginalMap(String destinationPath) throws IOException {
-        File pluginsFolder = Bukkit.getPluginManager().getPlugin("XSkyBlock").getDataFolder().getParentFile();
+        File pluginFolder = Bukkit.getPluginManager().getPlugin("XSkyBlock").getDataFolder();
+        File destinationDir = new File(pluginFolder.getParentFile(), destinationPath);
     
-        Path source = pluginsFolder.toPath().resolve("original_map");
-    
-        Path destination = pluginsFolder.toPath().resolve(destinationPath);
-    
-        if (!Files.exists(source)) {
-            throw new IOException("Source map folder does not exist: " + source.toString());
+        if (!destinationDir.exists()) {
+            destinationDir.mkdirs();
         }
     
-        if (!Files.exists(destination)) {
-            Files.createDirectories(destination);
-        }
+        ClassLoader classLoader = getClass().getClassLoader();
     
-        Files.walk(source).forEach(sourcePath -> {
+        String[] filesToCopy = {
+            "original_map/level.dat",
+            "original_map/region/r.0.0.mca",
+            "original_map/session.lock"
+        };
+    
+        for (String resourcePath : filesToCopy) {
             try {
-                Path targetPath = destination.resolve(source.relativize(sourcePath));
-                if (Files.isDirectory(sourcePath)) {
-                    if (!Files.exists(targetPath)) {
-                        Files.createDirectories(targetPath);
-                    }
-                } else {
-                    Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
+                File outFile = new File(destinationDir, resourcePath.replace("original_map/", ""));
+                File parentDir = outFile.getParentFile();
+                if (!parentDir.exists()) parentDir.mkdirs();
+    
+                try (var in = classLoader.getResourceAsStream(resourcePath)) {
+                    if (in == null) throw new IOException("Impossible de trouver la ressource : " + resourcePath);
+                    Files.copy(in, outFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 }
             } catch (IOException e) {
-                throw new RuntimeException("Failed to copy map files: " + e.getMessage(), e);
+                throw new IOException("Error while copying file : " + resourcePath, e);
             }
-        });
+        }
     }
     
 

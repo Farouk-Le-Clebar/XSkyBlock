@@ -1,21 +1,32 @@
 package com.xskyblock;
 
 import com.xskyblock.mapHandler.*;
+import com.xskyblock.market.Market;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class XSkyBlock extends JavaPlugin {
+    private final Market market = new Market();
+
     @Override
     public void onEnable() {
+        
         getLogger().info("XSkyBlock has been enabled!");
         getCommand("is").setExecutor(this);
+        getCommand("market").setExecutor(market);
+        getServer().getPluginManager().registerEvents(market, this);
+    }
+
+    @Override
+    public void onDisable() {
+        getLogger().info("XSkyBlock has been disabled!");
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage("Usage: /is <create|teleport>");
+            new TeleportToMap().execute(sender, args);
             return true;
         }
 
@@ -24,6 +35,9 @@ public class XSkyBlock extends JavaPlugin {
                 new MapCreator().execute(sender, args);
                 break;
             case "teleport":
+                new TeleportToMap().execute(sender, args);
+                break;
+            case "tp":
                 new TeleportToMap().execute(sender, args);
                 break;
             default:
