@@ -21,3 +21,6 @@ commands:
   market:
     description: Open market
     usage: /market <subcommand>
+  gm:
+    description: Change gamemode
+    usage: /gm

@@ -21,9 +21,9 @@ public class MapCreator {
         Player player = (Player) sender;
 
         try {
-            copyOriginalMap("islands/" + sender.getName());
-            loadWorld("plugins/islands/" + sender.getName());
-            World world = Bukkit.getWorld("plugins/islands/" + sender.getName());
+            copyOriginalMap("XSkyBlock/" + sender.getName());
+            loadWorld("plugins/XSkyBlock/" + sender.getName());
+            World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             world.setSpawnLocation(9, 65, 2);
             player.teleport(world.getSpawnLocation());
         } catch (IOException e) {
@@ -54,7 +54,7 @@ public class MapCreator {
                 File outFile = new File(destinationDir, resourcePath.replace("original_map/", ""));
                 File parentDir = outFile.getParentFile();
                 if (!parentDir.exists()) parentDir.mkdirs();
-    
+
                 try (var in = classLoader.getResourceAsStream(resourcePath)) {
                     if (in == null) throw new IOException("Impossible de trouver la ressource : " + resourcePath);
                     Files.copy(in, outFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

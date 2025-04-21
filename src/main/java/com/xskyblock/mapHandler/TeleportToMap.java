@@ -1,7 +1,8 @@
 package com.xskyblock.mapHandler;
 
-import org.bukkit.command.CommandSender;
+import java.io.File;
 
+import org.bukkit.command.CommandSender;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -19,7 +20,14 @@ public class TeleportToMap {
     }
 
     private void teleportPlayerToMap(Player player) {
-        String worldName = "plugins/islands/" + player.getName();
+        String worldName = "plugins/XSkyBlock/" + player.getName();
+        File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
+
+        if (!worldFolder.exists()) {
+            player.sendMessage("Please create your island first (/is create)");
+            return;
+        }
+
         World world = Bukkit.getWorld(worldName);
     
         if (world == null) {

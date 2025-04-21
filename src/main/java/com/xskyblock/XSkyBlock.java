@@ -1,5 +1,6 @@
 package com.xskyblock;
 
+import com.xskyblock.gamemodeHandler.GamemodeHandler;
 import com.xskyblock.mapHandler.*;
 import com.xskyblock.market.Market;
 import org.bukkit.command.Command;
@@ -15,6 +16,7 @@ public class XSkyBlock extends JavaPlugin {
         getLogger().info("XSkyBlock has been enabled!");
         getCommand("is").setExecutor(this);
         getCommand("market").setExecutor(market);
+        getCommand("gm").setExecutor(new GamemodeHandler());
         getServer().getPluginManager().registerEvents(market, this);
     }
 

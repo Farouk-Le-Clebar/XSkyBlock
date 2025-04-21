@@ -19,6 +19,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.ItemFlag;
 
 public class Market implements CommandExecutor, Listener {
+
+    private final MenuUtility menuUtility = new MenuUtility();
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -28,44 +31,33 @@ public class Market implements CommandExecutor, Listener {
 
         Player player = (Player) sender;
 
-        Inventory inventory = sender.getServer().createInventory(null, 54, "Market");
+        createMenu(player);
 
-        ItemStack enchantedFeather = new ItemStack(Material.FEATHER, 1);
-        ItemMeta meta = enchantedFeather.getItemMeta();
-        if (meta != null) {
-            meta.addEnchant(Enchantment.FEATHER_FALLING, 1, true);
-            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);            
-            meta.setDisplayName("§bFly (1Hour)");
-            meta.setLore(List.of("§bUse this item to fly for 1 hour.", "§bRight-click to activate."));
-            enchantedFeather.setItemMeta(meta);
-        }
+        return true;
+    }
 
-        ItemStack enchantedClock = new ItemStack(Material.CLOCK, 1);
-        ItemMeta clockMeta = enchantedClock.getItemMeta();
-        if (clockMeta != null) {
-            clockMeta.addEnchant(Enchantment.AQUA_AFFINITY, 1, true);
-            clockMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);            
-            clockMeta.setDisplayName("§bTime set day");
-            clockMeta.setLore(List.of("§bBuy to set the time to day.", "§bRight-click to activate."));
-            enchantedClock.setItemMeta(clockMeta);
-        }
+    public void createMenu(Player player) {
+        Inventory inventory = player.getServer().createInventory(null, 54, "Market");
 
-        inventory.setItem(0, enchantedFeather);
-        inventory.setItem(1, enchantedClock);
+        List<ItemStack> items = List.of(
+            new ItemStack(Material.FEATHER, 1),
+            new ItemStack(Material.CLOCK, 1)
+        );
+
+        menuUtility.changeItemMeta(items.get(0), "§bFly (1Hour)", List.of("§bUse this item to fly for 1 hour.", "§bRight-click to activate."), true);
+        menuUtility.changeItemMeta(items.get(1), "§bTime set day", List.of("§bBuy to set the time to day.", "§bRight-click to activate."), true);
+
+        menuUtility.setItemInventory(items, inventory);
 
         player.openInventory(inventory);
-        return true;
     }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getView().getTitle().equals("Market")) {
-            if (event.getCurrentItem().getType() == Material.CLOCK) {
-                event.getWhoClicked().sendMessage("You have purchased a time set day item!");
-                World world = event.getWhoClicked().getWorld();
-                world.setTime(0);
-            }
-            if (event.getCurrentItem().getType() == Material.FEATHER) {
+            int slot = event.getSlot();
+            
+            if (slot == 0) {
                 Player player = (Player) event.getWhoClicked();
                 if (player.getAllowFlight()) {
                     event.getWhoClicked().sendMessage("You are already flying!");
@@ -75,11 +67,15 @@ public class Market implements CommandExecutor, Listener {
                 event.getWhoClicked().sendMessage("You have purchased a fly item!");
                 player.setAllowFlight(true);
                 player.sendMessage("You can now fly for 1 hour!");
-
+                
                 Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin("XSkyBlock"), () -> {
                     player.setAllowFlight(false);
                     player.sendMessage("Your flight ability has expired!");
                 }, 20L * 60 * 60);
+            }
+
+            if (slot == 2) {
+                event.getWhoClicked().getWorld().setTime(0);
             }
             event.setCancelled(true);
         }
