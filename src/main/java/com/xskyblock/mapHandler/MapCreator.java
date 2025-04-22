@@ -14,14 +14,15 @@ import java.nio.file.StandardCopyOption;
 public class MapCreator {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§4§lSorry §r§8Only players can use this command");
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command");
             return false;
         }
 
         Player player = (Player) sender;
+        player.sendMessage("§6§lWarning §r§7Your island is being created, please wait...");
         World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
         if (world != null) {
-            player.sendMessage("§4§lSorry §r§8You already have an island");
+            player.sendMessage("§4§lSorry §r§7You already have an island");
             return false;
         }
         try {
@@ -32,7 +33,7 @@ public class MapCreator {
             player.teleport(world.getSpawnLocation());
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
-            player.sendMessage("§4§lSorry §r§8An error occurred while creating your island, please try again later");
+            player.sendMessage("§4§lSorry §r§7An error occurred while creating your island, please try again later");
         }
         return true;
     }

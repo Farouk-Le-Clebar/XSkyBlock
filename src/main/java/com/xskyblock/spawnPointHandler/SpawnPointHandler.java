@@ -22,13 +22,13 @@ public class SpawnPointHandler {
             Block block = playerWorld.getBlockAt(location.getBlockX(), location.getBlockY() - 1, location.getBlockZ());
 
             if (block.getType() == Material.AIR) {
-                player.sendMessage("§4§lSorry §r§8You cannot set the spawn point in mid-air. Please stand on a solid block.");
+                player.sendMessage("§4§lSorry §r§7You cannot set the spawn point in mid-air. Please stand on a solid block.");
                 return false;
             } 
             playerWorld.setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
             player.sendMessage("§2§lSuccessful §r§7Spawn point set to (" + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ")");
         } else {
-            sender.sendMessage("§4§lSorry §r§8You are not allowed to use this command here. ");
+            sender.sendMessage("§4§lSorry §r§7You are not allowed to use this command here. ");
         }
         return true;
     }

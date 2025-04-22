@@ -18,17 +18,17 @@ public class MapRemover {
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
 
         if (!worldFolder.exists()) {
-            player.sendMessage("§4§lSorry §r§8You don't have any island");
+            player.sendMessage("§4§lSorry §r§7You don't have any island");
             return false;
         }
         if (!Bukkit.getServer().unloadWorld(worldName, false)) {
-            player.sendMessage("§4§lSorry §r§8An error occurred while unloading your island world, you're not supposed to be on the island");
+            player.sendMessage("§4§lSorry §r§7An error occurred while unloading your island world, you're not supposed to be on the island");
             return false;
         }
         if (deleteFolder(worldFolder)) {
             player.sendMessage("§2§lSuccessful §r§7Your island has been removed");
         } else {
-            player.sendMessage("§4§lSorry §r§8An error occurred while removing your island");
+            player.sendMessage("§4§lSorry §r§7An error occurred while removing your island");
         }
         return true;
     }

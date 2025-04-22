@@ -9,7 +9,7 @@ public class FlyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("§4§lSorry §r§8Only players can use this command.");
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
         }
         Player player = (Player) sender;

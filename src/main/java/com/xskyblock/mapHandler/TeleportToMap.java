@@ -31,7 +31,7 @@ public class TeleportToMap {
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
 
         if (!worldFolder.exists()) {
-            player.sendMessage("§6§lWarning §r§8Please create your island first (/is create)");
+            player.sendMessage("§6§lWarning §r§7Please create your island first (/is create)");
             return;
         }
 
@@ -48,7 +48,7 @@ public class TeleportToMap {
             player.teleport(spawnLocation);
             player.sendMessage("§2§lSuccessful §r§7Your are now on your island");
         } else {
-            player.sendMessage("§4§lSorry §r§8An error occurred while teleporting you to your island");
+            player.sendMessage("§4§lSorry §r§7An error occurred while teleporting you to your island");
         }
     }
 
