@@ -1,0 +1,35 @@
+package com.xskyblock.spawnPointHandler;
+
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class SpawnPointHandler {
+    public boolean execute(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("Only players can use this command.");
+            return false;
+        }
+
+        Player player = (Player) sender;
+        World playerWorld = player.getWorld();
+
+        if (playerWorld.getName().contains(player.getName())) {
+            Location location = player.getLocation();
+            Block block = playerWorld.getBlockAt(location.getBlockX(), location.getBlockY() - 1, location.getBlockZ());
+
+            if (block.getType() == Material.AIR) {
+                player.sendMessage("§4§lSorry §r§8You cannot set the spawn point in mid-air. Please stand on a solid block.");
+                return false;
+            } 
+            playerWorld.setSpawnLocation(location.getBlockX(), location.getBlockY(), location.getBlockZ());
+            player.sendMessage("§2§lSuccessful §r§7Spawn point set to (" + location.getBlockX() + ", " + location.getBlockY() + ", " + location.getBlockZ() + ")");
+        } else {
+            sender.sendMessage("§4§lSorry §r§8You are not allowed to use this command here. ");
+        }
+        return true;
+    }
+}

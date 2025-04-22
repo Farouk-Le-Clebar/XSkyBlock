@@ -7,20 +7,14 @@ author: XerOce
 website: https://github.com/Xer0ce
 commands:
   is:
-    description: Teleport to your island
+    description: Main command for handling island operations (/is help)
     usage: /is
-  is teleport:
-    description: Teleport to your island
-    usage: /is teleport
-  is tp:
-    description: Teleport to your island
-    usage: /is tp
-  is create:
-    description: Create a new island
-    usage: /is create
   market:
     description: Open market
     usage: /market <subcommand>
   gm:
     description: Change gamemode
     usage: /gm
+  fly:
+    description: Toggle fly mode
+    usage: /fly

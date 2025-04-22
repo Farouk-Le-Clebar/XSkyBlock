@@ -15,7 +15,14 @@ public class TeleportToMap {
             sender.sendMessage("Only players can use this command.");
             return false;
         }
-        teleportPlayerToMap((Player) sender);
+        
+        Player player = (Player) sender;
+
+        player.setInvulnerable(true);
+        teleportPlayerToMap(player);
+        Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin("XSkyBlock"), () -> {
+            player.setInvulnerable(false);
+        }, 20L);
         return true;
     }
 
@@ -24,7 +31,7 @@ public class TeleportToMap {
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
 
         if (!worldFolder.exists()) {
-            player.sendMessage("Please create your island first (/is create)");
+            player.sendMessage("§6§lWarning §r§8Please create your island first (/is create)");
             return;
         }
 
@@ -39,18 +46,18 @@ public class TeleportToMap {
             Location spawnLocation = world.getSpawnLocation();
 
             player.teleport(spawnLocation);
-            player.sendMessage("Teleportation to your island...");
+            player.sendMessage("§2§lSuccessful §r§7Your are now on your island");
         } else {
-            player.sendMessage("Unable to teleport. Please contact an administrator.");
+            player.sendMessage("§4§lSorry §r§8An error occurred while teleporting you to your island");
         }
     }
 
     private void loadWorld(String worldName) {
         WorldCreator creator = new WorldCreator(worldName);
         World world = Bukkit.createWorld(creator);
-    
+
         if (world == null) {
-            throw new IllegalArgumentException("World could not be loaded. Please contact an administrator.");
+            throw new IllegalArgumentException("World could not be loaded");
         }
     }
 }

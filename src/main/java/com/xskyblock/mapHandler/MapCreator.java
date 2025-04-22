@@ -14,22 +14,26 @@ import java.nio.file.StandardCopyOption;
 public class MapCreator {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can use this command.");
+            sender.sendMessage("§4§lSorry §r§8Only players can use this command");
             return false;
         }
 
         Player player = (Player) sender;
-
+        World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
+        if (world != null) {
+            player.sendMessage("§4§lSorry §r§8You already have an island");
+            return false;
+        }
         try {
             copyOriginalMap("XSkyBlock/" + sender.getName());
             loadWorld("plugins/XSkyBlock/" + sender.getName());
-            World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
+            world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             world.setSpawnLocation(9, 65, 2);
             player.teleport(world.getSpawnLocation());
+            player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
-            player.sendMessage("Failed to create the map: " + e.getMessage());
+            player.sendMessage("§4§lSorry §r§8An error occurred while creating your island, please try again later");
         }
-
         return true;
     }
 
