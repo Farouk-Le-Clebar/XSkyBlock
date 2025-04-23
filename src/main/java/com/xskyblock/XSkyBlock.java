@@ -9,6 +9,7 @@ import com.xskyblock.market.Market;
 import com.xskyblock.money.MoneyDispatcher;
 import com.xskyblock.motd.CustomMotd;
 import com.xskyblock.playerJoining.PlayerJoiningHandler;
+import com.xskyblock.spawn.SpawnCommand;
 
 public class XSkyBlock extends JavaPlugin {
     private final Market market = new Market();
@@ -18,6 +19,8 @@ public class XSkyBlock extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("XSkyBlock has been enabled!");
+
+        loadDefaultConfig();
 
         getCommand("is").setExecutor(islandDispatcher);
         getCommand("is").setTabCompleter(islandDispatcher);
@@ -30,6 +33,7 @@ public class XSkyBlock extends JavaPlugin {
 
         getCommand("gm").setExecutor(new GamemodeHandler());
         getCommand("fly").setExecutor(new FlyCommand());
+        getCommand("spawn").setExecutor(new SpawnCommand());
 
         getServer().getPluginManager().registerEvents(new CustomMotd(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoiningHandler(), this);
@@ -38,5 +42,10 @@ public class XSkyBlock extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info("XSkyBlock has been disabled!");
+    }
+
+    public void loadDefaultConfig() {
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
     }
 }

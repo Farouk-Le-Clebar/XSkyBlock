@@ -11,10 +11,16 @@ commands:
     usage: /is
   market:
     description: Open market
-    usage: /market <subcommand>
+    usage: /market
   gm:
     description: Change gamemode
     usage: /gm
   fly:
     description: Toggle fly mode
     usage: /fly
+  money:
+    description: Check your balance
+    usage: /money
+  spawn:
+    description: Teleport to spawn
+    usage: /spawn
