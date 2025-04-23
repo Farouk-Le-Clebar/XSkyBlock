@@ -6,12 +6,20 @@ import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.xskyblock.config.ConfigUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 public class IslandCreator {
+    private ConfigUtils configUtils;
+
+    public IslandCreator(ConfigUtils configUtils) {
+        this.configUtils = configUtils;
+    }
+
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
@@ -29,9 +37,9 @@ public class IslandCreator {
             copyOriginalMap("XSkyBlock/" + sender.getName());
             loadWorld("plugins/XSkyBlock/" + sender.getName());
             world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
+            configUtils.setNewPlayerIsland(sender.getName(), sender.getName(), "owner");
             world.setSpawnLocation(9, 65, 2);
             player.teleport(world.getSpawnLocation());
-
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
             player.sendMessage("§4§lSorry §r§7An error occurred while creating your island, please try again later");

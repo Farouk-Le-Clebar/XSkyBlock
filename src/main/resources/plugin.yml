@@ -7,7 +7,7 @@ author: XerOce
 website: https://github.com/Xer0ce
 commands:
   is:
-    description: Main command for handling island operations (/is help)
+    description: (/is help) List of all commands
     usage: /is
   market:
     description: Open market
@@ -18,6 +18,3 @@ commands:
   fly:
     description: Toggle fly mode
     usage: /fly
-  money:
-    description: Check or set money
-    usage: /money

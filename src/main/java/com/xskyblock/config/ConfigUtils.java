@@ -44,4 +44,60 @@ public class ConfigUtils {
     public void reloadConfig() {
         config = YamlConfiguration.loadConfiguration(configFile);
     }
+
+    public boolean playerHavingIsland(String playerName) {
+        for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
+            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isPlayerExists(String playerName) {
+        for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
+            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
+                return true;
+            }
+        }
+        for (String moneys : config.getConfigurationSection("money.").getKeys(false)) {
+            if (moneys.equals(playerName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getPlayerIsland(String playerName) {
+        for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
+            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
+                return island;
+            }
+        }
+        return null;
+    }
+
+    public String getPlayerIslandPermission(String playerName) {
+        for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
+            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
+                return config.getString("islands." + island + "." + playerName);
+            }
+        }
+        return null;
+    }
+
+    public void removeIsland(String playerName) {
+        String island = getPlayerIsland(playerName);
+        String permission = getPlayerIslandPermission(playerName);
+
+        if (permission.equals("owner")) {
+            try {
+                config.set("islands." + island, null);
+                config.save(configFile);
+                reloadConfig();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

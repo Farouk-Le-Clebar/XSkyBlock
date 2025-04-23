@@ -9,25 +9,38 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 
+import com.xskyblock.config.ConfigUtils;
+
 public class IslandTeleport {
+    private ConfigUtils configUtils;
+
+    public IslandTeleport(ConfigUtils configUtils) {
+        this.configUtils = configUtils;
+    }
+
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
         }
-        
+
         Player player = (Player) sender;
 
+        String islandName = configUtils.getPlayerIsland(player.getName());
+
+        if (islandName == null)
+            islandName = player.getName();
+
         player.setInvulnerable(true);
-        teleportPlayerToMap(player);
+        teleportPlayerToMap(player, islandName);
         Bukkit.getScheduler().runTaskLater(Bukkit.getPluginManager().getPlugin("XSkyBlock"), () -> {
             player.setInvulnerable(false);
         }, 20L);
         return true;
     }
 
-    private void teleportPlayerToMap(Player player) {
-        String worldName = "plugins/XSkyBlock/" + player.getName();
+    private void teleportPlayerToMap(Player player, String islandName) {
+        String worldName = "plugins/XSkyBlock/" + islandName;
         File worldFolder = new File(Bukkit.getWorldContainer(), worldName);
 
         if (!worldFolder.exists()) {
@@ -36,12 +49,12 @@ public class IslandTeleport {
         }
 
         World world = Bukkit.getWorld(worldName);
-    
+
         if (world == null) {
             loadWorld(worldName);
             world = Bukkit.getWorld(worldName);
         }
-    
+
         if (world != null) {
             Location spawnLocation = world.getSpawnLocation();
 

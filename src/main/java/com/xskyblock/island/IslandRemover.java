@@ -6,7 +6,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.xskyblock.config.ConfigUtils;
+
 public class IslandRemover {
+    private ConfigUtils configUtils;
+
+    public IslandRemover(ConfigUtils configUtils) {
+        this.configUtils = configUtils;
+    }
+
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
@@ -28,6 +36,7 @@ public class IslandRemover {
             }
         }
         if (deleteFolder(worldFolder)) {
+            configUtils.removeIsland(player.getName());
             player.sendMessage("§2§lSuccessful §r§7Your island has been removed");
         } else {
             player.sendMessage("§4§lSorry §r§7An error occurred while removing your island");
