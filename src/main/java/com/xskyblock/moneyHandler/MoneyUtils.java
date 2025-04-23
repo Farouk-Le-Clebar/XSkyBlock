@@ -23,6 +23,7 @@ public class MoneyUtils {
     }
 
     public void addMoney(String playerName, int amount) {
+        reloadConfig();
         int currentMoney = config.getInt("money." + playerName, 0);
         int newMoney = currentMoney + amount;
         config.set("money." + playerName, newMoney);
@@ -34,6 +35,7 @@ public class MoneyUtils {
     }
 
     public void setPlayerMoney(String playerName, int amount) {
+        reloadConfig();
         config.set("money." + playerName, amount);
         try {
             config.save(configFile);
@@ -43,6 +45,7 @@ public class MoneyUtils {
     }
 
     public int getMoney(String playerName) {
+        reloadConfig();
         return config.getInt("money." + playerName, -1);
     }
 
@@ -51,6 +54,7 @@ public class MoneyUtils {
             config.set("money." + playerName, 0);
             try {
                 config.save(configFile);
+                reloadConfig();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -58,9 +62,14 @@ public class MoneyUtils {
     }
 
     public boolean isPlayerExists(String playerName) {
+        reloadConfig();
         if (config.get("money." + playerName) == null)
             return false;
         else
             return true;
+    }
+
+    public void reloadConfig() {
+        config = YamlConfiguration.loadConfiguration(configFile);
     }
 }

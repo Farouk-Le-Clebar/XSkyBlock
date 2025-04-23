@@ -19,18 +19,19 @@ public class MapCreator {
         }
 
         Player player = (Player) sender;
-        player.sendMessage("§6§lWarning §r§7Your island is being created, please wait...");
         World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
         if (world != null) {
             player.sendMessage("§4§lSorry §r§7You already have an island");
             return false;
         }
+        player.sendMessage("§6§lWarning §r§7Your island is being created, please wait...");
         try {
             copyOriginalMap("XSkyBlock/" + sender.getName());
             loadWorld("plugins/XSkyBlock/" + sender.getName());
             world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             world.setSpawnLocation(9, 65, 2);
             player.teleport(world.getSpawnLocation());
+
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
             player.sendMessage("§4§lSorry §r§7An error occurred while creating your island, please try again later");
@@ -47,7 +48,7 @@ public class MapCreator {
         }
     
         ClassLoader classLoader = getClass().getClassLoader();
-    
+
         String[] filesToCopy = {
             "original_map/level.dat",
             "original_map/region/r.0.0.mca",
