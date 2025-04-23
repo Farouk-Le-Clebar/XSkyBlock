@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class MapRemover {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can use this command.");
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
         }
         Player player = (Player) sender;
@@ -21,9 +21,11 @@ public class MapRemover {
             player.sendMessage("§4§lSorry §r§7You don't have any island");
             return false;
         }
-        if (!Bukkit.getServer().unloadWorld(worldName, false)) {
-            player.sendMessage("§4§lSorry §r§7An error occurred while unloading your island world, you're not supposed to be on the island");
-            return false;
+        if (Bukkit.getWorld(worldName) != null) {
+            if (!Bukkit.getServer().unloadWorld(worldName, false)) {
+                player.sendMessage("§4§lSorry §r§7An error occurred while unloading your island world, you're not supposed to be on the island");
+                return false;
+            }
         }
         if (deleteFolder(worldFolder)) {
             player.sendMessage("§2§lSuccessful §r§7Your island has been removed");

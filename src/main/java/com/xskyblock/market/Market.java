@@ -25,7 +25,7 @@ public class Market implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("This command can only be used by players.");
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return true;
         }
 

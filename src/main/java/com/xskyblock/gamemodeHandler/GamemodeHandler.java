@@ -10,12 +10,12 @@ public class GamemodeHandler implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("This command can only be used by players.");
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
         }
 
         if (args.length == 0) {
-            sender.sendMessage("Please specify a gamemode.");
+            sender.sendMessage("§6§lWarning §r§7Please specify a gamemode.");
             return false;
         }
 

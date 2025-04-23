@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public class SpawnPointHandler {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Only players can use this command.");
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
         }
 
