@@ -1,11 +1,11 @@
-package com.xskyblock.moneyHandler;
+package com.xskyblock.money;
 
 import org.bukkit.command.CommandSender;
 
-public class SetMoneyCommand {
+public class MoneySet {
     private MoneyUtils moneyUtils;
 
-    public SetMoneyCommand(MoneyUtils moneyUtils) {
+    public MoneySet(MoneyUtils moneyUtils) {
         this.moneyUtils = moneyUtils;
     }
 

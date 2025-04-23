@@ -1,4 +1,4 @@
-package com.xskyblock.mapHandler;
+package com.xskyblock.island;
 
 import java.io.File;
 
@@ -9,7 +9,7 @@ import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.entity.Player;
 
-public class TeleportToMap {
+public class IslandTeleport {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");

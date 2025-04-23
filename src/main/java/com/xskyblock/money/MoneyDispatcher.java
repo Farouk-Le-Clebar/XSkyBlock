@@ -1,4 +1,4 @@
-package com.xskyblock.moneyHandler;
+package com.xskyblock.money;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +15,16 @@ public class MoneyDispatcher implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            new GetMoneyCommand(moneyUtils).execute(sender, new String[]{"get"});
+            new MoneyGet(moneyUtils).execute(sender, new String[]{"get"});
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "get":
-                new GetMoneyCommand(moneyUtils).execute(sender, args);
+                new MoneyGet(moneyUtils).execute(sender, args);
                 break;
             case "set":
-                new SetMoneyCommand(moneyUtils).execute(sender, args);
+                new MoneySet(moneyUtils).execute(sender, args);
                 break;
             default:
                 sender.sendMessage("§6§lUsage §r§7/money <get|set>");

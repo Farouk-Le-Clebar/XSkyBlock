@@ -1,12 +1,12 @@
-package com.xskyblock.moneyHandler;
+package com.xskyblock.money;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GetMoneyCommand {
+public class MoneyGet {
     private final MoneyUtils moneyUtils;
 
-    public GetMoneyCommand(MoneyUtils moneyUtils) {
+    public MoneyGet(MoneyUtils moneyUtils) {
         this.moneyUtils = moneyUtils;
     }
 

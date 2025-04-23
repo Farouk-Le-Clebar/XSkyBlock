@@ -1,4 +1,4 @@
-package com.xskyblock.configHandler;
+package com.xskyblock.config;
 
 import java.io.File;
 import java.io.IOException;

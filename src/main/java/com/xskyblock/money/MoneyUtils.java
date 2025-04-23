@@ -1,4 +1,4 @@
-package com.xskyblock.moneyHandler;
+package com.xskyblock.money;
 
 import java.io.File;
 import java.io.IOException;

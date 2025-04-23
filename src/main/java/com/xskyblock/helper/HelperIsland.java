@@ -2,7 +2,7 @@ package com.xskyblock.helper;
 
 import org.bukkit.command.CommandSender;
 
-public class IslandCommands {
+public class HelperIsland {
     public boolean execute(CommandSender sender, String[] args) {
         sender.sendMessage("§8------§r§6§lXSkyBlock Helper§r§8------");
         sender.sendMessage("      §8§oIsland Commands :");

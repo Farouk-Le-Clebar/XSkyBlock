@@ -1,4 +1,4 @@
-package com.xskyblock.mapHandler;
+package com.xskyblock.island;
 
 import java.io.File;
 
@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MapRemover {
+public class IslandRemover {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");

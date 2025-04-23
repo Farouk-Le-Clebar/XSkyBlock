@@ -1,4 +1,4 @@
-package com.xskyblock.mapHandler;
+package com.xskyblock.island;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
-public class MapCreator {
+public class IslandCreator {
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
@@ -46,7 +46,7 @@ public class MapCreator {
         if (!destinationDir.exists()) {
             destinationDir.mkdirs();
         }
-    
+
         ClassLoader classLoader = getClass().getClassLoader();
 
         String[] filesToCopy = {
@@ -54,7 +54,7 @@ public class MapCreator {
             "original_map/region/r.0.0.mca",
             "original_map/session.lock"
         };
-    
+
         for (String resourcePath : filesToCopy) {
             try {
                 File outFile = new File(destinationDir, resourcePath.replace("original_map/", ""));
@@ -70,7 +70,6 @@ public class MapCreator {
             }
         }
     }
-    
 
     private void loadWorld(String mapName) {
         WorldCreator creator = new WorldCreator(mapName);

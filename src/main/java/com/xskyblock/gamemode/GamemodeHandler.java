@@ -1,4 +1,4 @@
-package com.xskyblock.gamemodeHandler;
+package com.xskyblock.gamemode;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

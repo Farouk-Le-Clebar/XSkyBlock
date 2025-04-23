@@ -1,4 +1,4 @@
-package com.xskyblock.mapHandler;
+package com.xskyblock.island;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,35 +8,34 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import com.xskyblock.helper.IslandCommands;
-import com.xskyblock.spawnPointHandler.SpawnPointHandler;
+import com.xskyblock.helper.HelperIsland;
 
 public class IslandDispatcher implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            new TeleportToMap().execute(sender, args);
+            new IslandTeleport().execute(sender, args);
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "create":
-                new MapCreator().execute(sender, args);
+                new IslandCreator().execute(sender, args);
                 break;
             case "teleport":
-                new TeleportToMap().execute(sender, args);
+                new IslandTeleport().execute(sender, args);
                 break;
             case "tp":
-                new TeleportToMap().execute(sender, args);
+                new IslandTeleport().execute(sender, args);
                 break;
             case "setworldspawn":
-                new SpawnPointHandler().execute(sender, args);
+                new IslandSpawnPoint().execute(sender, args);
                 break;
             case "help":
-                new IslandCommands().execute(sender, args);
+                new HelperIsland().execute(sender, args);
                 break;
             case "remove":
-                new MapRemover().execute(sender, args);
+                new IslandRemover().execute(sender, args);
                 break;
             default:
                 sender.sendMessage("Unknown subcommand. Use /is <create|teleport>");

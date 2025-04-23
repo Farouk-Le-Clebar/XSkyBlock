@@ -1,4 +1,4 @@
-package com.xskyblock.custommotd;
+package com.xskyblock.motd;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
