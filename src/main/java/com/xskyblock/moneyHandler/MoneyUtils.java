@@ -33,6 +33,15 @@ public class MoneyUtils {
         }
     }
 
+    public void setPlayerMoney(String playerName, int amount) {
+        config.set("money." + playerName, amount);
+        try {
+            config.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public int getMoney(String playerName) {
         return config.getInt("money." + playerName, -1);
     }
@@ -46,5 +55,12 @@ public class MoneyUtils {
                 e.printStackTrace();
             }
         }
+    }
+
+    public boolean isPlayerExists(String playerName) {
+        if (config.get("money." + playerName) == null)
+            return false;
+        else
+            return true;
     }
 }
