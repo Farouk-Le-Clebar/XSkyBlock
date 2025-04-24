@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.xskyblock.gamemode.GamemodeHandler;
 import com.xskyblock.island.IslandDispatcher;
+import com.xskyblock.island.cobbleGenerator.IslandCustomCobbleGenerator;
 import com.xskyblock.market.FlyCommand;
 import com.xskyblock.market.Market;
 import com.xskyblock.money.MoneyDispatcher;
@@ -37,6 +38,7 @@ public class XSkyBlock extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new CustomMotd(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoiningHandler(), this);
+        getServer().getPluginManager().registerEvents(new IslandCustomCobbleGenerator(), this);
     }
 
     @Override
