@@ -38,7 +38,7 @@ public class IslandCreator {
             loadWorld("plugins/XSkyBlock/" + sender.getName());
             world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             configUtils.setNewPlayerIsland(sender.getName(), sender.getName(), "owner");
-            world.setSpawnLocation(9, 65, 2);
+            world.setSpawnLocation(8, 67, 7);
             player.teleport(world.getSpawnLocation());
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
