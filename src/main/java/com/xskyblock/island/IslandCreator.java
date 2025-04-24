@@ -27,8 +27,7 @@ public class IslandCreator {
         }
 
         Player player = (Player) sender;
-        World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
-        if (world != null) {
+        if (configUtils.playerHavingIsland(player.getName())) {
             player.sendMessage("§4§lSorry §r§7You already have an island");
             return false;
         }
@@ -36,7 +35,7 @@ public class IslandCreator {
         try {
             copyOriginalMap("XSkyBlock/" + sender.getName());
             loadWorld("plugins/XSkyBlock/" + sender.getName());
-            world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
+            World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             configUtils.setNewPlayerIsland(sender.getName(), sender.getName(), "owner");
             world.setSpawnLocation(8, 67, 7);
             player.teleport(world.getSpawnLocation());
