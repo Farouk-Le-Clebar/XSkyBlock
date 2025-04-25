@@ -11,7 +11,7 @@ public class WorldBorderHandler {
         }
         Player player = (Player) sender;
 
-        player.setResourcePack("https://www.dropbox.com/scl/fi/3hlramzd5ji1nayysq8a6/Invisible-World-Border.zip?rlkey=814qsc1l9ta9c0jlxo1mymqwn&e=1&st=dbbueybp&dl=1");
+        player.setResourcePack("https://www.dropbox.com/scl/fi/gvu64lenvgdk1xjnzmw1t/XSkyBlock.zip?rlkey=rdjw96b122jatqpatqaf7djxs&st=zwyyeua3&dl=1");
         return true;
     }
     
