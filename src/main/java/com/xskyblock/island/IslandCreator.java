@@ -2,6 +2,7 @@ package com.xskyblock.island;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.WorldBorder;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -38,7 +39,10 @@ public class IslandCreator {
             World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             configUtils.setNewPlayerIsland(sender.getName(), sender.getName(), "owner");
             world.setSpawnLocation(8, 67, 7);
-            player.teleport(world.getSpawnLocation());
+            WorldBorder border = world.getWorldBorder();
+            border.setCenter(7.5, 7.5);
+            border.setSize(48);
+            player.teleport(world.getSpawnLocation().add(0.5, 0, 0.5));
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
             player.sendMessage("§4§lSorry §r§7An error occurred while creating your island, please try again later");

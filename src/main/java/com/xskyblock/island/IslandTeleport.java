@@ -58,6 +58,7 @@ public class IslandTeleport {
         if (world != null) {
             Location spawnLocation = world.getSpawnLocation();
 
+            spawnLocation.add(0.5, 0, 0.5);
             player.teleport(spawnLocation);
             player.sendMessage("§2§lSuccessful §r§7Your are now on your island");
         } else {
