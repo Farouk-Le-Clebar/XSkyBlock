@@ -40,7 +40,7 @@ public class IslandCreator {
             configUtils.setNewPlayerIsland(sender.getName(), sender.getName(), "owner");
             world.setSpawnLocation(8, 67, 7);
             WorldBorder border = world.getWorldBorder();
-            border.setCenter(7.5, 7.5);
+            border.setCenter(8, 8);
             border.setSize(48);
             player.teleport(world.getSpawnLocation().add(0.5, 0, 0.5));
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");

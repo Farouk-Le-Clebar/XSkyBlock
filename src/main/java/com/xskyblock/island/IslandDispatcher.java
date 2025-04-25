@@ -10,10 +10,12 @@ import org.bukkit.command.TabCompleter;
 
 import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.helper.HelperIsland;
+import com.xskyblock.island.worldBorder.WorldBorderHandler;
 
 public class IslandDispatcher implements CommandExecutor, TabCompleter {
     private ConfigUtils configUtils = new ConfigUtils();
     private IslandTeleport islandTeleport = new IslandTeleport(configUtils);
+    private WorldBorderHandler worldBorder = new WorldBorderHandler();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -44,11 +46,33 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
             case "invite":
                 new IslandInvitePlayer(configUtils).execute(sender, args);
                 break;
+            case "worldborder":
+                worldBorderDispatcher(sender, args);
+                break;
             default:
-                sender.sendMessage("Unknown subcommand. Use /is <create|teleport>");
+                sender.sendMessage("Unknown subcommand.");
                 break;
         }
         return true;
+    }
+
+    public void worldBorderDispatcher(CommandSender sender, String[] args) {
+        if (args.length < 2) {
+            sender.sendMessage("§4§lSorry §r§7Please specify a subcommand.");
+            return;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "show":
+                worldBorder.show(sender, args);
+                break;
+            case "hide":
+                worldBorder.hide(sender, args);
+                break;
+            default:
+                sender.sendMessage("Usage: /is worldborder <show|hide>");
+                break;
+        }
     }
 
     @Override
@@ -62,7 +86,14 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
                 subcommands.add("remove");
                 subcommands.add("invite");
                 subcommands.add("teleport");
+                subcommands.add("worldborder");
                 subcommands.add("setworldspawn");
+                return subcommands;
+            }
+            if (args.length == 2 && args[0].equalsIgnoreCase("worldborder")) {
+                List<String> subcommands = new ArrayList<>();
+                subcommands.add("show");
+                subcommands.add("hide");
                 return subcommands;
             }
         }
