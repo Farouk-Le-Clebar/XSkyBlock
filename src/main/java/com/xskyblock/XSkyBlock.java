@@ -2,6 +2,8 @@ package com.xskyblock;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.xskyblock.event.Chat;
+import com.xskyblock.event.PlayerJoining;
 import com.xskyblock.globalCommand.Day;
 import com.xskyblock.globalCommand.Fly;
 import com.xskyblock.globalCommand.GamemodeHandler;
@@ -13,13 +15,14 @@ import com.xskyblock.island.IslandDispatcher;
 import com.xskyblock.island.cobbleGenerator.IslandCustomCobbleGenerator;
 import com.xskyblock.market.Market;
 import com.xskyblock.money.MoneyDispatcher;
+import com.xskyblock.money.MoneyUtils;
 import com.xskyblock.motd.CustomMotd;
-import com.xskyblock.playerJoining.PlayerJoiningHandler;
 
 public class XSkyBlock extends JavaPlugin {
     private final Market market = new Market();
     private final IslandDispatcher islandDispatcher = new IslandDispatcher();
     private final MoneyDispatcher moneyDispatcher = new MoneyDispatcher();
+    private final MoneyUtils moneyUtils = new MoneyUtils();
 
     @Override
     public void onEnable() {
@@ -39,8 +42,9 @@ public class XSkyBlock extends JavaPlugin {
         setupGlobalCommands();
 
         getServer().getPluginManager().registerEvents(new CustomMotd(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoiningHandler(), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoining(), this);
         getServer().getPluginManager().registerEvents(new IslandCustomCobbleGenerator(), this);
+        getServer().getPluginManager().registerEvents(new Chat(), this);
     }
 
     @Override

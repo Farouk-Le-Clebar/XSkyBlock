@@ -42,6 +42,7 @@ public class IslandCreator {
             WorldBorder border = world.getWorldBorder();
             border.setCenter(8, 8);
             border.setSize(48);
+            border.setWarningDistance(0);
             player.teleport(world.getSpawnLocation().add(0.5, 0, 0.5));
             player.sendMessage("§2§lSuccessful §r§7Your island has been created, teleporting you to your island...");
         } catch (IOException e) {
