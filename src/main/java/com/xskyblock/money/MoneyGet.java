@@ -3,11 +3,13 @@ package com.xskyblock.money;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MoneyGet {
-    private final MoneyUtils moneyUtils;
+import com.xskyblock.config.UserUtils;
 
-    public MoneyGet(MoneyUtils moneyUtils) {
-        this.moneyUtils = moneyUtils;
+public class MoneyGet {
+     private final UserUtils userUtils;
+
+    public MoneyGet(UserUtils userUtil) {
+        this.userUtils = userUtil;
     }
 
     public boolean execute(CommandSender sender, String[] args) {
@@ -19,12 +21,12 @@ public class MoneyGet {
         Player player = (Player) sender;
 
         if (args.length == 1) {
-            int money = moneyUtils.getMoney(player.getName());
+            int money = userUtils.getMoney(player.getName());
             player.sendMessage("§2§l" + player.getName() + " §r§7has " + money + "§7$");
             return true;
         }
         if (args.length == 2) {
-            int money = moneyUtils.getMoney(args[1]);
+            int money = userUtils.getMoney(args[1]);
             if (money == -1) {
                 player.sendMessage("§4§lSorry §r§7Player not found.");
                 return true;

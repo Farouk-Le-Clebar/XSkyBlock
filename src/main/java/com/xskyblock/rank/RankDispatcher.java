@@ -1,4 +1,4 @@
-package com.xskyblock.money;
+package com.xskyblock.rank;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +9,37 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import com.xskyblock.config.MenuUtils;
+import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 
-public class MoneyDispatcher implements CommandExecutor, TabCompleter {
+public class RankDispatcher implements CommandExecutor, TabCompleter {
     private final UserUtils userUtils;
+    private final RankUtils rankUtils;
+    private final MenuUtils menuUtils;
 
-    public MoneyDispatcher(UserUtils userUtil) {
+    public RankDispatcher(UserUtils userUtil, RankUtils rankUtil, MenuUtils menuUtil) {
         this.userUtils = userUtil;
+        this.rankUtils = rankUtil;
+        this.menuUtils = menuUtil;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            new MoneyGet(userUtils).execute(sender, new String[]{"get"});
+            new RankMenu(userUtils, rankUtils, menuUtils).execute(sender);
             return true;
         }
 
         switch (args[0].toLowerCase()) {
             case "get":
-                new MoneyGet(userUtils).execute(sender, args);
+                new RankGet(userUtils, rankUtils).execute(sender, args);
                 break;
             case "set":
-                new MoneySet(userUtils).execute(sender, args);
+                new RankSet(userUtils, rankUtils).execute(sender, args);
                 break;
             default:
-                sender.sendMessage("§6§lUsage §r§7/money <get|set>");
+                sender.sendMessage("§6§lUsage §r§7/rank <get|set>");
                 break;
         }
         return true;
@@ -41,7 +47,7 @@ public class MoneyDispatcher implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        if (command.getName().equalsIgnoreCase("money")) {
+        if (command.getName().equalsIgnoreCase("rank")) {
             if (args.length == 1) {
                 List<String> subcommands = new ArrayList<>();
                 subcommands.add("get");
@@ -53,7 +59,7 @@ public class MoneyDispatcher implements CommandExecutor, TabCompleter {
                 return playerNames;
             } else if (args.length == 3 && args[0].equalsIgnoreCase("set")) {
                 List<String> amounts = new ArrayList<>();
-                amounts.add("<amount>");
+                amounts.add("<rank>");
                 return amounts;
             }
         }

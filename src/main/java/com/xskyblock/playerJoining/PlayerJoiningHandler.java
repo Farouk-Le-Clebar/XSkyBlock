@@ -4,13 +4,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.xskyblock.money.MoneyUtils;
+import com.xskyblock.config.UserUtils;
 
 public class PlayerJoiningHandler implements Listener {
-    private final MoneyUtils moneyUtils = new MoneyUtils();
+    private UserUtils userUtils;
+
+    public PlayerJoiningHandler(UserUtils userUtil) {
+        this.userUtils = userUtil;
+    }
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        moneyUtils.initPlayerMoney(event.getPlayer().getName());
+        userUtils.initPlayer(event.getPlayer().getName());
     }
 }

@@ -1,0 +1,9 @@
+ranks:
+  Admin:
+    prefix: "§c[Admin]§r "
+    permissions:
+      - "XSkyblock.rank.set"
+  Joueur:
+    prefix: "§7[Joueur]§r "
+    permissions:
+      - "XSkyblock.home"
