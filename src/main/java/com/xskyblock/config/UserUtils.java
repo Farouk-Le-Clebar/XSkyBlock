@@ -1,32 +1,31 @@
-package com.xskyblock.money;
+package com.xskyblock.config;
 
 import java.io.File;
 import java.io.IOException;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public class MoneyUtils {
+public class UserUtils {
     private File configFile;
     private FileConfiguration config;
 
-    public MoneyUtils() {
-        configFile = new File("plugins/XSkyBlock", "config.yml");
+    public UserUtils(JavaPlugin plugin) {
+        configFile = new File(plugin.getDataFolder(), "user.yml");
+
         if (!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            plugin.saveResource("user.yml", false);
         }
+
         config = YamlConfiguration.loadConfiguration(configFile);
     }
 
     public void addMoney(String playerName, int amount) {
         reloadConfig();
-        int currentMoney = config.getInt("money." + playerName, 0);
+        int currentMoney = config.getInt("user." + playerName + ".money", 0);
         int newMoney = currentMoney + amount;
-        config.set("money." + playerName, newMoney);
+        config.set("user." + playerName + ".money", newMoney);
         try {
             config.save(configFile);
         } catch (IOException e) {
@@ -36,7 +35,7 @@ public class MoneyUtils {
 
     public void setPlayerMoney(String playerName, int amount) {
         reloadConfig();
-        config.set("money." + playerName, amount);
+        config.set("user." + playerName + ".money", amount);
         try {
             config.save(configFile);
         } catch (IOException e) {
@@ -46,12 +45,28 @@ public class MoneyUtils {
 
     public int getMoney(String playerName) {
         reloadConfig();
-        return config.getInt("money." + playerName, -1);
+        return config.getInt("user." + playerName + ".money", -1);
     }
 
-    public void initPlayerMoney(String playerName) {
-        if (config.get("money." + playerName) == null) {
-            config.set("money." + playerName, 0);
+    public String getRank(String playerName) {
+        reloadConfig();
+        return config.getString("user." + playerName + ".rank", "ERROR");
+    }
+
+    public void setPlayerRank(String playerName, String rank) {
+        reloadConfig();
+        config.set("user." + playerName + ".rank", rank);
+        try {
+            config.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initPlayer(String playerName) {
+        if (config.get("user." + playerName) == null) {
+            config.set("user." + playerName + ".money", 0);
+            config.set("user." + playerName + ".rank", "Joueur");
             try {
                 config.save(configFile);
                 reloadConfig();
@@ -63,7 +78,7 @@ public class MoneyUtils {
 
     public boolean isPlayerExists(String playerName) {
         reloadConfig();
-        if (config.get("money." + playerName) == null)
+        if (config.get("user." + playerName) == null)
             return false;
         else
             return true;

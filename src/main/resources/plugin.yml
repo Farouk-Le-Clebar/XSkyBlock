@@ -21,6 +21,9 @@ commands:
   money:
     description: Check your balance
     usage: /money
+  rank:
+    description: Check your rank
+    usage: /rank
   spawn:
     description: Teleport to spawn
     usage: /spawn

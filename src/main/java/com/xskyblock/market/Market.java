@@ -1,7 +1,5 @@
 package com.xskyblock.market;
 
-import java.util.List;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -14,9 +12,15 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.xskyblock.config.MenuUtils;
+
 public class Market implements CommandExecutor, Listener {
 
-    private final MenuUtility menuUtility = new MenuUtility();
+    private MenuUtils menuUtils;
+
+    public Market(MenuUtils menuUtil) {
+        this.menuUtils = menuUtil;
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -33,18 +37,23 @@ public class Market implements CommandExecutor, Listener {
     }
 
     public void createMenu(Player player) {
-        Inventory inventory = player.getServer().createInventory(null, 54, "Market");
+        Inventory inventory = menuUtils.createInventory("Market", 54);
 
-        List<ItemStack> items = List.of(
-            new ItemStack(Material.FEATHER, 1),
-            new ItemStack(Material.CLOCK, 1)
+        ItemStack fly = menuUtils.createItem(Material.FEATHER, "§b✦ §aFly (1Hour) §b✦",
+        true,
+            "§7Use this item to fly for 1 hour.",
+            "§7Right-click to activate."
         );
 
-        menuUtility.changeItemMeta(items.get(0), "§bFly (1Hour)", List.of("§bUse this item to fly for 1 hour.", "§bRight-click to activate."), true);
-        menuUtility.changeItemMeta(items.get(1), "§bTime set day", List.of("§bBuy to set the time to day.", "§bRight-click to activate."), true);
+        ItemStack timeSetDay = menuUtils.createItem(Material.CLOCK, "§b✦ §aTime set day §b✦",
+        true,
+            "§7Buy to set the time to day.",
+            "§7Right-click to activate."
+        );
 
-        menuUtility.setItemInventory(items, inventory);
-
+        inventory.setItem(0, fly);
+        inventory.setItem(1, timeSetDay);
+        
         player.openInventory(inventory);
     }
 

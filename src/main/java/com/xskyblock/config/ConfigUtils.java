@@ -13,6 +13,7 @@ public class ConfigUtils {
     public ConfigUtils() {
         if (!configFile.exists()) {
             try {
+                configFile.getParentFile().mkdirs();
                 configFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();

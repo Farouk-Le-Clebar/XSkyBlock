@@ -2,11 +2,13 @@ package com.xskyblock.money;
 
 import org.bukkit.command.CommandSender;
 
-public class MoneySet {
-    private MoneyUtils moneyUtils;
+import com.xskyblock.config.UserUtils;
 
-    public MoneySet(MoneyUtils moneyUtils) {
-        this.moneyUtils = moneyUtils;
+public class MoneySet {
+     private final UserUtils userUtils;
+
+    public MoneySet(UserUtils userUtil) {
+        this.userUtils = userUtil;
     }
 
     public boolean execute(CommandSender sender, String[] args) {
@@ -22,14 +24,14 @@ public class MoneySet {
         
         String playerName = args[1];
 
-        if (!moneyUtils.isPlayerExists(playerName)) {
+        if (!userUtils.isPlayerExists(playerName)) {
             sender.sendMessage("§4§lSorry §r§7This player does not exist.");
             return true;
         }
 
         String amountStr = args[2];
 
-        moneyUtils.setPlayerMoney(playerName, Integer.parseInt(amountStr));
+        userUtils.setPlayerMoney(playerName, Integer.parseInt(amountStr));
 
         sender.sendMessage("§2§lSuccessful §r§7You have set " + playerName + "'s money to " + amountStr + "$");
 

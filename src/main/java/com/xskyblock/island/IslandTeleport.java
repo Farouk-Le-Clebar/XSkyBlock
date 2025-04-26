@@ -2,11 +2,11 @@ package com.xskyblock.island;
 
 import java.io.File;
 
-import org.bukkit.command.CommandSender;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.xskyblock.config.ConfigUtils;

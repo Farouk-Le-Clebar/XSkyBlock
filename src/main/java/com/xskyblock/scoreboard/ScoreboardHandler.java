@@ -7,14 +7,14 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.ScoreboardManager;
 
-import com.xskyblock.money.MoneyUtils;
+import com.xskyblock.config.UserUtils;
 
 public class ScoreboardHandler {
     private ScoreboardManager manager = Bukkit.getScoreboardManager();
-    private MoneyUtils moneyUtils = new MoneyUtils();
+    UserUtils userUtils;
 
-    public ScoreboardHandler(MoneyUtils moneyUtils) {
-        this.moneyUtils = moneyUtils;
+    public ScoreboardHandler(UserUtils userUtil) {
+        this.userUtils = userUtil;
     }
 
     public void addScoreBoardToPlayer(Player player) {
@@ -37,7 +37,7 @@ public class ScoreboardHandler {
 
         Bukkit.getScheduler().runTaskTimer(Bukkit.getPluginManager().getPlugin("XSkyBlock"), () -> {
             scoreboard.getTeam("players").setPrefix("§aPlayers: §f" + Bukkit.getOnlinePlayers().size());
-            scoreboard.getTeam("money").setPrefix("§aMoney: §f" + moneyUtils.getMoney(player.getName()) + "$");
+            scoreboard.getTeam("money").setPrefix("§aMoney: §f" + userUtils.getMoney(player.getName()) + "$");
             scoreboard.getTeam("spacer").setPrefix("");
         }, 0L, 20L);
     }
