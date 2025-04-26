@@ -1,0 +1,28 @@
+package com.xskyblock.island.worldBorder;
+
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class WorldBorderHandler {
+    public boolean hide(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
+            return true;
+        }
+        Player player = (Player) sender;
+
+        player.setResourcePack("https://www.dropbox.com/scl/fi/gvu64lenvgdk1xjnzmw1t/XSkyBlock.zip?rlkey=rdjw96b122jatqpatqaf7djxs&st=zwyyeua3&dl=1");
+        return true;
+    }
+    
+    public boolean show(CommandSender sender, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
+            return true;
+        }
+        Player player = (Player) sender;
+        
+        player.setResourcePack("");
+        return true;
+    }
+}
