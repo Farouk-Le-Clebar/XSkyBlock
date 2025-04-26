@@ -39,6 +39,8 @@ public class Market implements CommandExecutor, Listener {
     public void createMenu(Player player) {
         Inventory inventory = menuUtils.createInventory("Market", 54);
 
+        ItemStack pane = menuUtils.createItem(Material.BLACK_STAINED_GLASS_PANE, "", false, "");
+
         ItemStack fly = menuUtils.createItem(Material.FEATHER, "§b✦ §aFly (1Hour) §b✦",
         true,
             "§7Use this item to fly for 1 hour.",
@@ -50,6 +52,10 @@ public class Market implements CommandExecutor, Listener {
             "§7Buy to set the time to day.",
             "§7Right-click to activate."
         );
+
+        for (int i = 0; i < inventory.getSize(); i++) {
+            inventory.setItem(i, pane);
+        }
 
         inventory.setItem(0, fly);
         inventory.setItem(1, timeSetDay);
@@ -79,7 +85,7 @@ public class Market implements CommandExecutor, Listener {
                 }, 20L * 60 * 60);
             }
 
-            if (slot == 2) {
+            if (slot == 1) {
                 event.getWhoClicked().getWorld().setTime(0);
             }
             event.setCancelled(true);
