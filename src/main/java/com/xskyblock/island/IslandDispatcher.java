@@ -13,9 +13,14 @@ import com.xskyblock.helper.HelperIsland;
 import com.xskyblock.island.worldBorder.WorldBorderHandler;
 
 public class IslandDispatcher implements CommandExecutor, TabCompleter {
-    private ConfigUtils configUtils = new ConfigUtils();
-    private IslandTeleport islandTeleport = new IslandTeleport(configUtils);
+    private ConfigUtils configUtils;
+    private IslandTeleport islandTeleport;
     private WorldBorderHandler worldBorder = new WorldBorderHandler();
+
+    public IslandDispatcher(ConfigUtils configUtils) {
+        this.configUtils = configUtils;
+        this.islandTeleport = new IslandTeleport(configUtils);
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {

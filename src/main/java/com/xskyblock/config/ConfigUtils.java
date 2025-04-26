@@ -26,7 +26,6 @@ public class ConfigUtils {
         try {
             config.set("islands." + playerIsland + "." + playerName, null);
             config.save(configFile);
-            reloadConfig();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,7 +35,6 @@ public class ConfigUtils {
         try {
             config.set("islands." + playerIsland + "." + playerName, permission);
             config.save(configFile);
-            reloadConfig();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,17 +54,21 @@ public class ConfigUtils {
     }
 
     public boolean isPlayerExists(String playerName) {
-        for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
-            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
-                return true;
-            }
-        }
-        for (String moneys : config.getConfigurationSection("money.").getKeys(false)) {
-            if (moneys.equals(playerName)) {
+        for (String alreadyConnected : config.getConfigurationSection("alreadyConnected.").getKeys(false)) {
+            if (alreadyConnected.equals(playerName)) {
                 return true;
             }
         }
         return false;
+    }
+
+    public void setPlayerAlreadyConnected(String playerName) {
+        try {
+            config.set("alreadyConnected." + playerName, true);
+            config.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getPlayerIsland(String playerName) {
@@ -95,7 +97,6 @@ public class ConfigUtils {
             try {
                 config.set("islands." + island, null);
                 config.save(configFile);
-                reloadConfig();
             } catch (IOException e) {
                 e.printStackTrace();
             }

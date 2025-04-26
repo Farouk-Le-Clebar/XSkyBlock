@@ -2,6 +2,7 @@ package com.xskyblock;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.MenuUtils;
 import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
@@ -23,25 +24,28 @@ import com.xskyblock.prefix.PlayerPrefixHandler;
 import com.xskyblock.rank.RankDispatcher;
 
 public class XSkyBlock extends JavaPlugin {
-    private final IslandDispatcher islandDispatcher = new IslandDispatcher();
+    private IslandDispatcher islandDispatcher;
     private UserUtils userUtils;
     private RankUtils rankUtils;
     private MenuUtils menuUtils;
     private MoneyDispatcher moneyDispatcher;
     private RankDispatcher rankDispatcher;
+    private ConfigUtils configUtils;
     
     @Override
     public void onEnable() {
         getLogger().info("XSkyBlock has been enabled!");
 
         loadDefaultConfig();
-        
+
         userUtils = new UserUtils(this);
         rankUtils = new RankUtils(this);
         menuUtils = new MenuUtils();
-    
+        configUtils = new ConfigUtils();
+
         moneyDispatcher = new MoneyDispatcher(userUtils);
         rankDispatcher = new RankDispatcher(userUtils, rankUtils, menuUtils);
+        islandDispatcher = new IslandDispatcher(configUtils);
 
         getCommand("is").setExecutor(islandDispatcher);
         getCommand("is").setTabCompleter(islandDispatcher);
@@ -58,7 +62,7 @@ public class XSkyBlock extends JavaPlugin {
         
         getServer().getPluginManager().registerEvents(new Market(menuUtils), this);
         getServer().getPluginManager().registerEvents(new CustomMotd(), this);
-        getServer().getPluginManager().registerEvents(new PlayerJoining(userUtils), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoining(userUtils, configUtils), this);
         getServer().getPluginManager().registerEvents(new IslandCustomCobbleGenerator(), this);
         getServer().getPluginManager().registerEvents(new PlayerPrefixHandler(userUtils, rankUtils), this);
         getServer().getPluginManager().registerEvents(new Chat(), this);
