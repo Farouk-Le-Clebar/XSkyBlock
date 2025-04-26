@@ -38,6 +38,7 @@ public class IslandCreator {
             loadWorld("plugins/XSkyBlock/" + sender.getName());
             World world = Bukkit.getWorld("plugins/XSkyBlock/" + sender.getName());
             configUtils.setNewPlayerIsland(sender.getName(), sender.getName(), "owner");
+            configUtils.saveIslandLevel(sender.getName(), 450);
             world.setSpawnLocation(8, 67, 7);
             WorldBorder border = world.getWorldBorder();
             border.setCenter(8, 8);

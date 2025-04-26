@@ -1,4 +1,3 @@
-default-setting: true
 block-values:
   DIAMOND_BLOCK: 50
   EMERALD_BLOCK: 45
@@ -61,6 +60,13 @@ block-values:
   SPAWNER: 100
   DRAGON_EGG: 100
   WITHER_ROSE: 15
+
+#  islands:
+#    island-name:                          (island name is the name of the owner of the island):
+#      members:                            (list of members)
+#        player-name: <role>               (owner, member)
+#        player-name: <role>               (owner, member)
+#      level: <level>                      (integer value)
 
 islands: {}
 

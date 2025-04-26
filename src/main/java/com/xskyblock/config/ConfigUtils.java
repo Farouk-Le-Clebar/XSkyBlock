@@ -22,9 +22,26 @@ public class ConfigUtils {
         config = YamlConfiguration.loadConfiguration(configFile);
     }
 
+    public FileConfiguration getConfig() {
+        return config;
+    }
+
+    public void saveIslandLevel(String island, int level) {
+        try {
+            config.set("islands." + island + ".level", level);
+            config.save(configFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getIslandLevel(String island) {
+        return config.getInt("islands." + island + ".level", 0);
+    }
+
     public void removePlayerIsland(String playerIsland, String playerName) {
         try {
-            config.set("islands." + playerIsland + "." + playerName, null);
+            config.set("islands." + playerIsland + ".members." + playerName, null);
             config.save(configFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,7 +50,8 @@ public class ConfigUtils {
 
     public void setNewPlayerIsland(String playerIsland, String playerName, String permission) {
         try {
-            config.set("islands." + playerIsland + "." + playerName, permission);
+            config.createSection("islands." + playerIsland + ".members." + playerName);
+            config.set("islands." + playerIsland + ".members." + playerName, permission);
             config.save(configFile);
         } catch (IOException e) {
             e.printStackTrace();
@@ -46,7 +64,7 @@ public class ConfigUtils {
 
     public boolean playerHavingIsland(String playerName) {
         for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
-            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
+            if (config.getConfigurationSection("islands." + island + ".members.").getKeys(false).contains(playerName)) {
                 return true;
             }
         }
@@ -73,7 +91,7 @@ public class ConfigUtils {
 
     public String getPlayerIsland(String playerName) {
         for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
-            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
+            if (config.getConfigurationSection("islands." + island + ".members.").getKeys(false).contains(playerName)) {
                 return island;
             }
         }
@@ -82,8 +100,8 @@ public class ConfigUtils {
 
     public String getPlayerIslandPermission(String playerName) {
         for (String island : config.getConfigurationSection("islands.").getKeys(false)) {
-            if (config.getConfigurationSection("islands." + island).getKeys(false).contains(playerName)) {
-                return config.getString("islands." + island + "." + playerName);
+            if (config.getConfigurationSection("islands." + island + ".members.").getKeys(false).contains(playerName)) {
+                return config.getString("islands." + island + ".members." + playerName);
             }
         }
         return null;

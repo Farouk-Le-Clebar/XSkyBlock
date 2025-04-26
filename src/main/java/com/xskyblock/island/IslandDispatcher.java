@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import com.xskyblock.config.ConfigUtils;
+import com.xskyblock.config.UserUtils;
 import com.xskyblock.helper.HelperIsland;
 import com.xskyblock.island.worldBorder.WorldBorderHandler;
 
@@ -54,6 +55,9 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
             case "worldborder":
                 worldBorderDispatcher(sender, args);
                 break;
+            case "level":
+                new IslandLevel(configUtils).execute(sender, args);
+                break;
             default:
                 sender.sendMessage("Unknown subcommand.");
                 break;
@@ -87,6 +91,7 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
                 List<String> subcommands = new ArrayList<>();
                 subcommands.add("tp");
                 subcommands.add("help");
+                subcommands.add("level");
                 subcommands.add("create");
                 subcommands.add("remove");
                 subcommands.add("invite");
