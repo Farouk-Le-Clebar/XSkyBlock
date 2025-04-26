@@ -18,6 +18,8 @@ public class PlayerJoining implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        scoreboardHandler = new ScoreboardHandler(userUtils);
+
         userUtils.initPlayer(event.getPlayer().getName());
         event.getPlayer().setResourcePack("https://www.dropbox.com/scl/fi/gvu64lenvgdk1xjnzmw1t/XSkyBlock.zip?rlkey=rdjw96b122jatqpatqaf7djxs&st=zwyyeua3&dl=1");
         scoreboardHandler.addScoreBoardToPlayer(event.getPlayer());
