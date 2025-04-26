@@ -19,7 +19,7 @@ public class PlayerJoining implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        ScoreboardHandler scoreboardHandler = new ScoreboardHandler(userUtils);
+        ScoreboardHandler scoreboardHandler = new ScoreboardHandler(userUtils, configUtils);
 
         userUtils.initPlayer(event.getPlayer().getName());
         if (!configUtils.isPlayerExists(event.getPlayer().getName()))
