@@ -12,6 +12,7 @@ import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 import com.xskyblock.helper.HelperIsland;
+import com.xskyblock.island.worker.IslandCreateWorker;
 import com.xskyblock.island.worldBorder.WorldBorderHandler;
 
 public class IslandDispatcher implements CommandExecutor, TabCompleter {
@@ -38,7 +39,7 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
 
         switch (args[0].toLowerCase()) {
             case "create":
-                new IslandCreator(configUtils, rankUtils, userUtils).execute(sender, args);
+                createDispatcher(sender, args);
                 break;
             case "teleport":
                 islandTeleport.execute(sender, args);
@@ -69,6 +70,22 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
                 break;
         }
         return true;
+    }
+
+    public void createDispatcher(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            new IslandCreator(configUtils, rankUtils, userUtils).execute(sender, args);
+            return;
+        }
+
+        switch (args[1].toLowerCase()) {
+            case "worker":
+                new IslandCreateWorker(configUtils, userUtils, rankUtils).createWorker(sender, args);
+                break;
+            default:
+                sender.sendMessage("Usage: /is create worker");
+                break;
+        }
     }
 
     public void worldBorderDispatcher(CommandSender sender, String[] args) {
@@ -110,6 +127,11 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
                 List<String> subcommands = new ArrayList<>();
                 subcommands.add("show");
                 subcommands.add("hide");
+                return subcommands;
+            }
+            if (args.length == 2 && args[0].equalsIgnoreCase("create")) {
+                List<String> subcommands = new ArrayList<>();
+                subcommands.add("worker");
                 return subcommands;
             }
         }
