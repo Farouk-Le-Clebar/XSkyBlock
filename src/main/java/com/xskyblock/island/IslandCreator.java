@@ -8,6 +8,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.xskyblock.config.ConfigUtils;
+import com.xskyblock.config.RankUtils;
+import com.xskyblock.config.UserUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,14 +18,24 @@ import java.nio.file.StandardCopyOption;
 
 public class IslandCreator {
     private ConfigUtils configUtils;
+    private RankUtils rankUtils;
+    private UserUtils userUtils;
 
-    public IslandCreator(ConfigUtils configUtils) {
+    public IslandCreator(ConfigUtils configUtils, RankUtils rankUtils, UserUtils userUtils) {
         this.configUtils = configUtils;
+        this.rankUtils = rankUtils;
+        this.userUtils = userUtils;
     }
 
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
+            return false;
+        }
+
+        String playerRank = userUtils.getRank(sender.getName());
+        if (!rankUtils.hasPermission(playerRank, "XSkyBlock.island.create")) {
+            sender.sendMessage("§4§lSorry §r§7You don't have permission to use this command.");
             return false;
         }
 

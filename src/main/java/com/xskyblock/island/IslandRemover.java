@@ -7,12 +7,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.xskyblock.config.ConfigUtils;
+import com.xskyblock.config.RankUtils;
+import com.xskyblock.config.UserUtils;
 
 public class IslandRemover {
     private ConfigUtils configUtils;
+    private UserUtils userUtils;
+    private RankUtils rankUtils;
 
-    public IslandRemover(ConfigUtils configUtils) {
+    public IslandRemover(ConfigUtils configUtils, UserUtils userUtils, RankUtils rankUtils) {
         this.configUtils = configUtils;
+        this.userUtils = userUtils;
+        this.rankUtils = rankUtils;
     }
 
     public boolean execute(CommandSender sender, String[] args) {
@@ -20,6 +26,13 @@ public class IslandRemover {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
         }
+
+        String playerRank = rankUtils.getRank(sender.getName());
+        if (!rankUtils.hasPermission(playerRank, "XSkyBlock.island.remove")) {
+            sender.sendMessage("§4§lSorry §r§7You don't have permission to use this command.");
+            return false;
+        }
+
         Player player = (Player) sender;
 
         String worldName = "plugins/XSkyBlock/" + player.getName();

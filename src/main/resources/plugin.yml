@@ -9,33 +9,45 @@ commands:
   is:
     description: (/is help) List of all commands
     usage: /is
+    permissions: xskyblock.island
   market:
     description: Open market
     usage: /market
+    permissions: xskyblock.market
   gm:
     description: Change gamemode
     usage: /gm
+    aliases: [gamemode]
+    permissions: xskyblock.gamemode
   fly:
     description: Toggle fly mode
     usage: /fly
+    permissions: xskyblock.fly
   money:
     description: Check your balance
     usage: /money
+    aliases: [bal, balance]
   rank:
     description: Check your rank
     usage: /rank
+    permissions: xskyblock.rank
   spawn:
     description: Teleport to spawn
     usage: /spawn
+    permissions: xskyblock.spawn
   god:
     description: Toggle god mode
     usage: /god
+    permissions: xskyblock.god
   heal:
     description: Heal yourself
     usage: /heal
+    permissions: xskyblock.heal
   day:
     description: Set time to day
     usage: /day
+    permissions: xskyblock.day
   night:
     description: Set time to night
     usage: /night
+    permissions: xskyblock.night

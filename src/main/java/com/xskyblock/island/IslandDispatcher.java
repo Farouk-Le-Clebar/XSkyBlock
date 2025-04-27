@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import com.xskyblock.config.ConfigUtils;
+import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 import com.xskyblock.helper.HelperIsland;
 import com.xskyblock.island.worldBorder.WorldBorderHandler;
@@ -16,11 +17,16 @@ import com.xskyblock.island.worldBorder.WorldBorderHandler;
 public class IslandDispatcher implements CommandExecutor, TabCompleter {
     private ConfigUtils configUtils;
     private IslandTeleport islandTeleport;
-    private WorldBorderHandler worldBorder = new WorldBorderHandler();
+    private RankUtils rankUtils;
+    private UserUtils userUtils;
+    private WorldBorderHandler worldBorder;
 
-    public IslandDispatcher(ConfigUtils configUtils) {
+    public IslandDispatcher(ConfigUtils configUtils, RankUtils rankUtils, UserUtils userUtils) {
         this.configUtils = configUtils;
-        this.islandTeleport = new IslandTeleport(configUtils);
+        this.rankUtils = rankUtils;
+        this.userUtils = userUtils;
+        this.islandTeleport = new IslandTeleport(configUtils, userUtils, rankUtils);
+        this.worldBorder = new WorldBorderHandler(userUtils, rankUtils);
     }
 
     @Override
@@ -32,7 +38,7 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
 
         switch (args[0].toLowerCase()) {
             case "create":
-                new IslandCreator(configUtils).execute(sender, args);
+                new IslandCreator(configUtils, rankUtils, userUtils).execute(sender, args);
                 break;
             case "teleport":
                 islandTeleport.execute(sender, args);
@@ -41,22 +47,22 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
                 islandTeleport.execute(sender, args);
                 break;
             case "setworldspawn":
-                new IslandSpawnPoint().execute(sender, args);
+                new IslandSpawnPoint(userUtils, rankUtils).execute(sender, args);
                 break;
             case "help":
                 new HelperIsland().execute(sender, args);
                 break;
             case "remove":
-                new IslandRemover(configUtils).execute(sender, args);
+                new IslandRemover(configUtils, userUtils, rankUtils).execute(sender, args);
                 break;
             case "invite":
-                new IslandInvitePlayer(configUtils).execute(sender, args);
+                new IslandInvitePlayer(configUtils, userUtils, rankUtils).execute(sender, args);
                 break;
             case "worldborder":
                 worldBorderDispatcher(sender, args);
                 break;
             case "level":
-                new IslandLevel(configUtils).execute(sender, args);
+                new IslandLevel(configUtils, userUtils, rankUtils).execute(sender, args);
                 break;
             default:
                 sender.sendMessage("Unknown subcommand.");

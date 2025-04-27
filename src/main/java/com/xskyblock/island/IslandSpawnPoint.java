@@ -7,11 +7,28 @@ import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.xskyblock.config.RankUtils;
+import com.xskyblock.config.UserUtils;
+
 public class IslandSpawnPoint {
+    private UserUtils userUtils;
+    private RankUtils rankUtils;
+
+    public IslandSpawnPoint(UserUtils userUtils, RankUtils rankUtils) {
+        this.userUtils = userUtils;
+        this.rankUtils = rankUtils;
+    }
+
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
+        }
+
+        String playerRank = userUtils.getRank(sender.getName());
+        if (!rankUtils.hasPermission(playerRank, "XSkyBlock.island.setworldspawn")) {
+            sender.sendMessage("§4§lSorry §r§7You don't have permission to use this command.");
+            return true;
         }
 
         Player player = (Player) sender;

@@ -60,9 +60,6 @@ public class RankUtils {
     }
 
     public boolean hasPermission(String rank, String permission) {
-        if (config.getStringList("ranks." + rank + ".permissions") == null) {
-            return false;
-        }
         return config.getStringList("ranks." + rank + ".permissions").contains(permission);
     }
 

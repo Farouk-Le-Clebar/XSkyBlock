@@ -10,23 +10,35 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import com.xskyblock.config.ConfigUtils;
+import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class IslandLevel {
-    private final ConfigUtils configUtils;
+    private ConfigUtils configUtils;
+    private UserUtils userUtils;
+    private RankUtils rankUtils;
     private Map<Material, Integer> blockValues;
 
-    public IslandLevel(ConfigUtils configUtils) {
+    public IslandLevel(ConfigUtils configUtils, UserUtils userUtils, RankUtils rankUtils) {
         this.configUtils = configUtils;
+        this.userUtils = userUtils;
+        this.rankUtils = rankUtils;
         this.blockValues = loadBlockValues();
     }
 
     public void execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
+            return;
+        }
+
+        String playerRank = userUtils.getRank(player.getName());
+        if (!rankUtils.hasPermission(playerRank, "XSkyBlock.island.level")) {
+            sender.sendMessage("§4§lSorry §r§7You don't have permission to use this command.");
+
             return;
         }
 

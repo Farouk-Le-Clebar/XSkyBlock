@@ -45,7 +45,7 @@ public class XSkyBlock extends JavaPlugin {
 
         moneyDispatcher = new MoneyDispatcher(userUtils);
         rankDispatcher = new RankDispatcher(userUtils, rankUtils, menuUtils);
-        islandDispatcher = new IslandDispatcher(configUtils);
+        islandDispatcher = new IslandDispatcher(configUtils, rankUtils, userUtils);
 
         getCommand("is").setExecutor(islandDispatcher);
         getCommand("is").setTabCompleter(islandDispatcher);

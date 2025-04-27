@@ -3,7 +3,23 @@ ranks:
     prefix: "§c[Admin]§r "
     permissions:
       - "XSkyblock.rank.set"
+      - "XSkyBlock.island"
+      - "XSkyBlock.island.create"
+      - "XSkyBlock.island.invite"
+      - "XSkyBlock.island.remove"
+      - "XSkyBlock.island.level"
+      - "XSkyBlock.island.setworldspawn"
+      - "XSkyBlock.island.worldborder.hide"
+      - "XSkyBlock.island.worldborder.show"
+
   Joueur:
     prefix: "§7[Joueur]§r "
     permissions:
-      - "XSkyblock.home"
+      - "XSkyBlock.island"
+      - "XSkyBlock.island.create"
+      - "XSkyBlock.island.invite"
+      - "XSkyBlock.island.remove"
+      - "XSkyBlock.island.level"
+      - "XSkyBlock.island.setworldspawn"
+      - "XSkyBlock.island.worldborder.hide"
+      - "XSkyBlock.island.worldborder.show"

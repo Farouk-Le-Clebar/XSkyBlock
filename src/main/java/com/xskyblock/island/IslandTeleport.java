@@ -10,18 +10,30 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.xskyblock.config.ConfigUtils;
+import com.xskyblock.config.RankUtils;
+import com.xskyblock.config.UserUtils;
 
 public class IslandTeleport {
     private ConfigUtils configUtils;
+    private UserUtils userUtils;
+    private RankUtils rankUtils;
 
-    public IslandTeleport(ConfigUtils configUtils) {
+    public IslandTeleport(ConfigUtils configUtils, UserUtils userUtils, RankUtils rankUtils) {
         this.configUtils = configUtils;
+        this.userUtils = userUtils;
+        this.rankUtils = rankUtils;
     }
 
     public boolean execute(CommandSender sender, String[] args) {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§4§lSorry §r§7Only players can use this command.");
             return false;
+        }
+
+        String playerRank = userUtils.getRank(sender.getName());
+        if (!rankUtils.hasPermission(playerRank, "XSkyBlock.island")) {
+            sender.sendMessage("§4§lSorry §r§7You don't have permission to use this command.");
+            return true;
         }
 
         Player player = (Player) sender;
