@@ -3,10 +3,12 @@ package com.xskyblock.island;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.RankUtils;
@@ -21,6 +23,7 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
     private RankUtils rankUtils;
     private UserUtils userUtils;
     private WorldBorderHandler worldBorder;
+    private IslandCreateWorker islandCreateWorker;
 
     public IslandDispatcher(ConfigUtils configUtils, RankUtils rankUtils, UserUtils userUtils) {
         this.configUtils = configUtils;
@@ -28,6 +31,9 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
         this.userUtils = userUtils;
         this.islandTeleport = new IslandTeleport(configUtils, userUtils, rankUtils);
         this.worldBorder = new WorldBorderHandler(userUtils, rankUtils);
+        this.islandCreateWorker = new IslandCreateWorker(configUtils, userUtils, rankUtils);
+
+        Bukkit.getPluginManager().registerEvents(islandCreateWorker, Bukkit.getPluginManager().getPlugin("XSkyBlock"));
     }
 
     @Override
@@ -80,7 +86,7 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
 
         switch (args[1].toLowerCase()) {
             case "worker":
-                new IslandCreateWorker(configUtils, userUtils, rankUtils).createWorker(sender, args);
+                islandCreateWorker.createWorker(sender, args);
                 break;
             default:
                 sender.sendMessage("Usage: /is create worker");

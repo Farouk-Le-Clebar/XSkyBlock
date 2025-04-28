@@ -3,6 +3,7 @@ package com.xskyblock.config;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
@@ -11,11 +12,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class MenuUtils {
-    public Inventory createInventory(String title, int size) {
-        return org.bukkit.Bukkit.createInventory(null, size, title);
+    public static Inventory createInventory(String title, int size) {
+        return Bukkit.createInventory(null, size, title);
     }
 
-    public ItemStack createItem(Material material, String name, Boolean enchanted, String... lore) {
+    public static ItemStack createItem(Material material, String name, Boolean enchanted, String... lore) {
         ItemStack item = new ItemStack(material);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(name);
@@ -28,7 +29,7 @@ public class MenuUtils {
         return item;
     }
 
-    public void setItemInventory(List<ItemStack> items, Inventory inventory) {
+    public static void setItemInventory(List<ItemStack> items, Inventory inventory) {
         for (int i = 0; i < items.size(); i++) {
             inventory.setItem(i, items.get(i));
         }

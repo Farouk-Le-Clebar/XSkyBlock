@@ -67,7 +67,7 @@ public class Market implements CommandExecutor, Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         if (event.getView().getTitle().equals("Market")) {
             int slot = event.getSlot();
-            
+
             if (slot == 0) {
                 Player player = (Player) event.getWhoClicked();
                 if (player.getAllowFlight()) {

@@ -9,6 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
@@ -18,10 +23,11 @@ import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 
-public class IslandCreateWorker {
+public class IslandCreateWorker implements Listener {
     private ConfigUtils configUtils;
     private UserUtils userUtils;
     private RankUtils rankUtils;
+    private IslandWorkerMenu islandWorkerMenu = new IslandWorkerMenu();
 
     public IslandCreateWorker(ConfigUtils configUtils, UserUtils userUtils, RankUtils rankUtils) {
         this.configUtils = configUtils;
@@ -112,5 +118,37 @@ public class IslandCreateWorker {
                 }
             }
         }.runTaskTimer(Bukkit.getPluginManager().getPlugin("XSkyBlock"), 0L, 2L);
+    }
+
+    @EventHandler
+    public void onPlayerShiftRightClick(PlayerInteractAtEntityEvent event) {
+        if (event.getRightClicked() instanceof ArmorStand) {
+            ArmorStand armorStand = (ArmorStand) event.getRightClicked();
+            if (armorStand.getCustomName() != null && armorStand.getCustomName().contains("§7Mining §5Worker")) {
+                if (event.getPlayer().isSneaking()) {
+                    event.setCancelled(true);
+                    islandWorkerMenu.openMenu(event.getPlayer(), 1);
+                } else {
+                    event.setCancelled(true);
+                    event.getPlayer().sendMessage("§6§lWarning §r§7Shift Righ-Click to interact with worker.");
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent event) {
+        if (event.getView().getTitle().equals("§6§lIsland Worker")) {
+            if (event.getClickedInventory().getType() == InventoryType.PLAYER)
+                return;
+
+            int slot = event.getSlot();
+            if (slot != 6 && slot != 7 && slot != 8 &&
+                slot != 15 && slot != 16 && slot != 17 &&
+                slot != 24 && slot != 25 && slot != 26)
+            {
+                event.setCancelled(true);
+            }
+        }
     }
 }
