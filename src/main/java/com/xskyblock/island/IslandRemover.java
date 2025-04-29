@@ -8,16 +8,13 @@ import org.bukkit.entity.Player;
 
 import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.RankUtils;
-import com.xskyblock.config.UserUtils;
 
 public class IslandRemover {
     private ConfigUtils configUtils;
-    private UserUtils userUtils;
     private RankUtils rankUtils;
 
-    public IslandRemover(ConfigUtils configUtils, UserUtils userUtils, RankUtils rankUtils) {
+    public IslandRemover(ConfigUtils configUtils, RankUtils rankUtils) {
         this.configUtils = configUtils;
-        this.userUtils = userUtils;
         this.rankUtils = rankUtils;
     }
 

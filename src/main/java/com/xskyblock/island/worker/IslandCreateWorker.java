@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
@@ -64,13 +65,14 @@ public class IslandCreateWorker implements Listener {
         armorStand.setInvulnerable(true);
         armorStand.setCustomName("§7Mining §5Worker §5I");
         armorStand.setCustomNameVisible(true);
-        armorStand.setHelmet(ArmorStandUtils.createCustomHead(
+        EntityEquipment entityEquipment = armorStand.getEquipment();
+        entityEquipment.setHelmet(ArmorStandUtils.createCustomHead(
             "http://textures.minecraft.net/texture/c2854af3d42814a2e060949e5a5cbfad73c4ba3d3e77289b12d890b1249472ee"
         ));
-        armorStand.setItemInHand(ArmorStandUtils.createItem(Material.WOODEN_PICKAXE, true));
-        armorStand.setChestplate(ArmorStandUtils.createItem(Material.LEATHER_CHESTPLATE, false));
-        armorStand.setLeggings(ArmorStandUtils.createItem(Material.LEATHER_LEGGINGS, false));
-        armorStand.setBoots(ArmorStandUtils.createItem(Material.LEATHER_BOOTS, false));
+        entityEquipment.setItemInMainHand(ArmorStandUtils.createItem(Material.WOODEN_PICKAXE, true));
+        entityEquipment.setChestplate(ArmorStandUtils.createItem(Material.LEATHER_CHESTPLATE, false));
+        entityEquipment.setLeggings(ArmorStandUtils.createItem(Material.LEATHER_LEGGINGS, false));
+        entityEquipment.setBoots(ArmorStandUtils.createItem(Material.LEATHER_BOOTS, false));
         armorStand.setCanPickupItems(false);
 
         new BukkitRunnable() {

@@ -67,6 +67,10 @@ block-values:
 #        player-name: <role>               (owner, member)
 #        player-name: <role>               (owner, member)
 #      level: <level>                      (integer value)
+#      workers:
+#        worker-<number>:
+#          type: <type>                    (farmer, miner, builder)
+#          level: <level>                  (integer value)
 
 islands: {}
 

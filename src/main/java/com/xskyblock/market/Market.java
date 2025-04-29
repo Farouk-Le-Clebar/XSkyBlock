@@ -15,13 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import com.xskyblock.config.MenuUtils;
 
 public class Market implements CommandExecutor, Listener {
-
-    private MenuUtils menuUtils;
-
-    public Market(MenuUtils menuUtil) {
-        this.menuUtils = menuUtil;
-    }
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
@@ -37,17 +30,17 @@ public class Market implements CommandExecutor, Listener {
     }
 
     public void createMenu(Player player) {
-        Inventory inventory = menuUtils.createInventory("Market", 54);
+        Inventory inventory = MenuUtils.createInventory("Market", 54);
 
-        ItemStack pane = menuUtils.createItem(Material.BLACK_STAINED_GLASS_PANE, "", false, "");
+        ItemStack pane = MenuUtils.createItem(Material.BLACK_STAINED_GLASS_PANE, "", false, "");
 
-        ItemStack fly = menuUtils.createItem(Material.FEATHER, "§b✦ §aFly (1Hour) §b✦",
+        ItemStack fly = MenuUtils.createItem(Material.FEATHER, "§b✦ §aFly (1Hour) §b✦",
         true,
             "§7Use this item to fly for 1 hour.",
             "§7Right-click to activate."
         );
 
-        ItemStack timeSetDay = menuUtils.createItem(Material.CLOCK, "§b✦ §aTime set day §b✦",
+        ItemStack timeSetDay = MenuUtils.createItem(Material.CLOCK, "§b✦ §aTime set day §b✦",
         true,
             "§7Buy to set the time to day.",
             "§7Right-click to activate."

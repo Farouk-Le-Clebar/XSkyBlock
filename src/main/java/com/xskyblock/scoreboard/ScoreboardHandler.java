@@ -2,6 +2,7 @@ package com.xskyblock.scoreboard;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -22,7 +23,7 @@ public class ScoreboardHandler {
 
     public void addScoreBoardToPlayer(Player player) {
         Scoreboard scoreboard = manager.getNewScoreboard();
-        Objective objective = scoreboard.registerNewObjective("XSkyBlock", "dummy", "§6§lXSkyBlock");
+        Objective objective = scoreboard.registerNewObjective("XSkyBlock", Criteria.DUMMY, "§6§lXSkyBlock");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         player.setScoreboard(scoreboard);
 

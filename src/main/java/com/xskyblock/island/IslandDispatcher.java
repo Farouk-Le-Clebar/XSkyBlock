@@ -8,7 +8,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.RankUtils;
@@ -60,7 +59,7 @@ public class IslandDispatcher implements CommandExecutor, TabCompleter {
                 new HelperIsland().execute(sender, args);
                 break;
             case "remove":
-                new IslandRemover(configUtils, userUtils, rankUtils).execute(sender, args);
+                new IslandRemover(configUtils, rankUtils).execute(sender, args);
                 break;
             case "invite":
                 new IslandInvitePlayer(configUtils, userUtils, rankUtils).execute(sender, args);

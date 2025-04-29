@@ -56,11 +56,11 @@ public class XSkyBlock extends JavaPlugin {
         getCommand("rank").setExecutor(rankDispatcher);
         getCommand("rank").setTabCompleter(rankDispatcher);
 
-        getCommand("market").setExecutor(new Market(menuUtils));
+        getCommand("market").setExecutor(new Market());
         
         setupGlobalCommands();
         
-        getServer().getPluginManager().registerEvents(new Market(menuUtils), this);
+        getServer().getPluginManager().registerEvents(new Market(), this);
         getServer().getPluginManager().registerEvents(new CustomMotd(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoining(userUtils, configUtils), this);
         getServer().getPluginManager().registerEvents(new IslandCustomCobbleGenerator(), this);
