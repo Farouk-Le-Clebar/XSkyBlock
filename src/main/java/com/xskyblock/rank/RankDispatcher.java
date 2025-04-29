@@ -9,25 +9,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-import com.xskyblock.config.MenuUtils;
 import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 
 public class RankDispatcher implements CommandExecutor, TabCompleter {
     private final UserUtils userUtils;
     private final RankUtils rankUtils;
-    private final MenuUtils menuUtils;
 
-    public RankDispatcher(UserUtils userUtil, RankUtils rankUtil, MenuUtils menuUtil) {
+    public RankDispatcher(UserUtils userUtil, RankUtils rankUtil) {
         this.userUtils = userUtil;
         this.rankUtils = rankUtil;
-        this.menuUtils = menuUtil;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 0) {
-            new RankMenu(userUtils, rankUtils, menuUtils).execute(sender);
+            new RankMenu(userUtils).execute(sender);
             return true;
         }
 

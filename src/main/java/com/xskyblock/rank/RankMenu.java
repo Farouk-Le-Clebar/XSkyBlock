@@ -8,18 +8,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.xskyblock.config.MenuUtils;
-import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 
 public class RankMenu {
     private final UserUtils userUtils;
-    private final RankUtils rankUtils;
-    private final MenuUtils menuUtils;
 
-    public RankMenu(UserUtils userUtil, RankUtils rankUtil, MenuUtils menuUtil) {
-        this.menuUtils = menuUtil;
+    public RankMenu(UserUtils userUtil) {
         this.userUtils = userUtil;
-        this.rankUtils = rankUtil;
     }
 
     public boolean execute(CommandSender sender) {
@@ -33,7 +28,7 @@ public class RankMenu {
         Inventory rankMenu = Bukkit.createInventory(null, 45, "§8✦ §aMenu des Rangs §8✦");
 
         // ---- 1. Bouton "Quêtes de rang" ----
-        ItemStack quests = menuUtils.createItem(Material.BOOK, "§b✦ §aQuêtes de Rang §b✦",
+        ItemStack quests = MenuUtils.createItem(Material.BOOK, "§b✦ §aQuêtes de Rang §b✦",
         false,
             "§7Accomplis des quêtes pour débloquer",
             "§7des récompenses exclusives selon ton rang.",
@@ -42,7 +37,7 @@ public class RankMenu {
         );
 
         // ---- 2. Bouton "Voir tous les Rangs" ----
-        ItemStack allRanks = menuUtils.createItem(Material.PAPER, "§d✦ §bVoir Tous les Rangs §d✦",
+        ItemStack allRanks = MenuUtils.createItem(Material.PAPER, "§d✦ §bVoir Tous les Rangs §d✦",
             false,
             "§7Liste complète des rangs disponibles",
             "§7avec leurs avantages exclusifs.",
@@ -51,7 +46,7 @@ public class RankMenu {
         );
 
         // ---- 3. Boutique de rangs ----
-        ItemStack rankShop = menuUtils.createItem(Material.EMERALD, "§a✦ §2Boutique de Rang §a✦",
+        ItemStack rankShop = MenuUtils.createItem(Material.EMERALD, "§a✦ §2Boutique de Rang §a✦",
             false,
             "§7Achète des objets exclusifs selon ton rang actuel.",
             "",
@@ -60,7 +55,7 @@ public class RankMenu {
 
         // ---- 4. Voir son propre rang ----
         String playerRank = userUtils.getRank(player.getName());
-        ItemStack yourRank = menuUtils.createItem(Material.NAME_TAG, "§b✦ §fTon Rang Actuel : §a" + playerRank + " §b✦",
+        ItemStack yourRank = MenuUtils.createItem(Material.NAME_TAG, "§b✦ §fTon Rang Actuel : §a" + playerRank + " §b✦",
             false,
             "§7Voici ton rang actuel sur le serveur.",
             "§7Gravis les échelons pour débloquer encore plus de récompenses !"

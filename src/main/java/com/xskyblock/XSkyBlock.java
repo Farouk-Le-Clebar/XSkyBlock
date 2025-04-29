@@ -3,7 +3,6 @@ package com.xskyblock;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.xskyblock.config.ConfigUtils;
-import com.xskyblock.config.MenuUtils;
 import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
 import com.xskyblock.event.Chat;
@@ -27,7 +26,6 @@ public class XSkyBlock extends JavaPlugin {
     private IslandDispatcher islandDispatcher;
     private UserUtils userUtils;
     private RankUtils rankUtils;
-    private MenuUtils menuUtils;
     private MoneyDispatcher moneyDispatcher;
     private RankDispatcher rankDispatcher;
     private ConfigUtils configUtils;
@@ -40,11 +38,10 @@ public class XSkyBlock extends JavaPlugin {
 
         userUtils = new UserUtils(this);
         rankUtils = new RankUtils(this);
-        menuUtils = new MenuUtils();
         configUtils = new ConfigUtils();
 
         moneyDispatcher = new MoneyDispatcher(userUtils);
-        rankDispatcher = new RankDispatcher(userUtils, rankUtils, menuUtils);
+        rankDispatcher = new RankDispatcher(userUtils, rankUtils);
         islandDispatcher = new IslandDispatcher(configUtils, rankUtils, userUtils);
 
         getCommand("is").setExecutor(islandDispatcher);
