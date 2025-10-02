@@ -18,17 +18,23 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
 import org.bukkit.util.Vector;
+import org.bukkit.inventory.ItemStack;
 
 import com.xskyblock.config.ArmorStandUtils;
 import com.xskyblock.config.ConfigUtils;
 import com.xskyblock.config.RankUtils;
 import com.xskyblock.config.UserUtils;
+import com.xskyblock.island.worker.WorkerInventoryHolder;
+import com.xskyblock.island.worker.IslandWorkerMenu;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IslandCreateWorker implements Listener {
     private ConfigUtils configUtils;
     private UserUtils userUtils;
     private RankUtils rankUtils;
-    private IslandWorkerMenu islandWorkerMenu = new IslandWorkerMenu();
+    private List <IslandWorkerMenu> workerList = new ArrayList<>();
 
     public IslandCreateWorker(ConfigUtils configUtils, UserUtils userUtils, RankUtils rankUtils) {
         this.configUtils = configUtils;
@@ -75,12 +81,14 @@ public class IslandCreateWorker implements Listener {
         entityEquipment.setBoots(ArmorStandUtils.createItem(Material.LEATHER_BOOTS, false));
         armorStand.setCanPickupItems(false);
 
+        workerList.add(new IslandWorkerMenu(armorStand.getUniqueId().toString()));
+
         new BukkitRunnable() {
             double t = 0;
             int animationTick = 0;
             int breakProgress = 0;
             Block targetBlock = null;
-        
+
             @Override
             public void run() {
                 if (armorStand.isDead() || !armorStand.isValid()) {
@@ -113,8 +121,13 @@ public class IslandCreateWorker implements Listener {
                             nearby.sendBlockDamage(targetBlock.getLocation(), breakProgress / 9.0f);
 
                         if (breakProgress >= 9) {
-                            targetBlock.breakNaturally();
-                            targetBlock = null;
+                            for (IslandWorkerMenu workerMenu : workerList) {
+                                if (workerMenu.getWorkerId().equals(armorStand.getUniqueId().toString())) {
+                                    workerMenu.addItem(new ItemStack(targetBlock.getType(), 1));
+                                    break;
+                                }
+                            }
+                            targetBlock.setType(Material.AIR);
                         }
                     }
                 }
@@ -126,13 +139,15 @@ public class IslandCreateWorker implements Listener {
     public void onPlayerShiftRightClick(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked() instanceof ArmorStand) {
             ArmorStand armorStand = (ArmorStand) event.getRightClicked();
-            if (armorStand.getCustomName() != null && armorStand.getCustomName().contains("§7Mining §5Worker")) {
-                if (event.getPlayer().isSneaking()) {
+            for (IslandWorkerMenu workerMenu : workerList) {
+                if (workerMenu.getWorkerId().equals(armorStand.getUniqueId().toString())) {
                     event.setCancelled(true);
-                    islandWorkerMenu.openMenu(event.getPlayer(), 1);
-                } else {
-                    event.setCancelled(true);
-                    event.getPlayer().sendMessage("§6§lWarning §r§7Shift Righ-Click to interact with worker.");
+                    if (event.getPlayer().isSneaking()) {
+                        workerMenu.openMenu(event.getPlayer(), 1);
+                    } else {
+                        event.getPlayer().sendMessage("§6§lWarning §r§7Shift Right-Click to interact with worker.");
+                    }
+                    return;
                 }
             }
         }
@@ -140,17 +155,11 @@ public class IslandCreateWorker implements Listener {
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
-        if (event.getView().getTitle().equals("§6§lIsland Worker")) {
-            if (event.getClickedInventory().getType() == InventoryType.PLAYER)
-                return;
+        if (event.getInventory().getHolder() instanceof WorkerInventoryHolder holder) {
+            event.setCancelled(true);
 
-            int slot = event.getSlot();
-            if (slot != 6 && slot != 7 && slot != 8 &&
-                slot != 15 && slot != 16 && slot != 17 &&
-                slot != 24 && slot != 25 && slot != 26)
-            {
-                event.setCancelled(true);
-            }
+            Player player = (Player) event.getWhoClicked();
+            player.sendMessage(holder.getWorkerId());
         }
     }
 }
